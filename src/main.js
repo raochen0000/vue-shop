@@ -15,10 +15,13 @@ import './assets/fonts/iconfont.css' //导入字体图标
 import {
   Form, FormItem, Input, Button, Message, Container, Header, Aside, Main,
   Submenu, MenuItemGroup, Menu, MenuItem, Row, Col, Card, Breadcrumb, BreadcrumbItem,
-  Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox
+  Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox, Tag, Tree, Select, Option
 } from 'element-ui';
 
-
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(Tree)
+Vue.use(Tag)
 Vue.prototype.$confirm = MessageBox
 Vue.use(Dialog)
 Vue.use(Pagination)

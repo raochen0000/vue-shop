@@ -80,7 +80,6 @@ export default {
       if (res.meta.status !== 200)
         return this.$message.error("获取权限列表失败！");
       this.manuList = res.data;
-      // console.log(this.manuList);
     },
     saveNavState(path) {
       sessionStorage.setItem("activePath", path);

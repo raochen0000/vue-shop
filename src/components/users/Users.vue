@@ -1,13 +1,13 @@
 <template>
   <div>
     <!-- 面包屑导航 -->
-    <el-breadcrumb separator="/">
+    <el-breadcrumb separator="/" class="myBreadcrumb">
       <el-breadcrumb-item :to="{ path: '/' }">主页</el-breadcrumb-item>
       <el-breadcrumb-item><a href="/">用户管理</a></el-breadcrumb-item>
       <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 卡片区域 -->
-    <el-card class="box-card">
+    <el-card class="myCard">
       <!-- 搜索 -->
       <el-row :gutter="20">
         <el-col :span="16">
@@ -82,6 +82,7 @@
                   type="primary"
                   icon="el-icon-setting"
                   size="mini"
+                  @click="showRightsDialog(scoped.row)"
                 ></el-button>
               </el-tooltip>
             </template>
@@ -162,6 +163,34 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="editDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="editUser">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- 设置用户信息对话框 -->
+    <el-dialog
+      title="用户权限分配"
+      :visible.sync="editRightsDialogVisible"
+      width="40%"
+      @close="roleValue = ''"
+    >
+      <div>
+        <p>当前用户：{{ currentRole.username }}</p>
+        <p>当前角色：{{ currentRole.role_name }}</p>
+        <p>
+          分配新角色：
+          <el-select v-model="roleValue" placeholder="请选择">
+            <el-option
+              v-for="item in rolesList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+        </p>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editRightsDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="setRoles">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -252,6 +281,13 @@ export default {
           },
         ],
       },
+      editRightsDialogVisible: false,
+      //当前展示的用户角色
+      currentRole: [],
+      //角色列表
+      rolesList: [],
+      //用户下拉列表中选择的角色
+      roleValue: "",
     };
   },
   created() {
@@ -261,6 +297,7 @@ export default {
     /* 获取用户列表 */
     getUserList() {
       this.$axios.get("/users", { params: this.queryInfo }).then((res) => {
+        console.log(res);
         if (res.data.meta.status !== 200)
           return this.$message.error("获取用户信息列表失败！");
         this.userList = res.data.data.users;
@@ -281,7 +318,6 @@ export default {
       this.$axios
         .put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
         .then((res) => {
-          console.log(res.data.data.mg_state);
           if (res.data.meta.status !== 200)
             return this.$message.error("修改状态失败！");
           return this.$message.success("修改状态成功！");
@@ -354,15 +390,33 @@ export default {
           });
         });
     },
+    /* 获取用户权限 */
+    showRightsDialog(roles) {
+      this.editRightsDialogVisible = true;
+      this.currentRole = roles;
+      this.$axios.get("roles").then((res) => {
+        if (res.data.meta.status !== 200)
+          return this.$message.error("获取角色列表失败！");
+        this.rolesList = res.data.data;
+      });
+    },
+    setRoles() {
+      if (!this.roleValue) return this.$message.error("请先选择用户角色！");
+      this.$axios
+        .put(`users/${this.currentRole.id}/role`, { rid: this.roleValue })
+        .then((res) => {
+          if (res.data.meta.status !== 200)
+            return this.$message.error("更新用户角色失败！");
+          this.getUserList();
+          this.$message.success("更新用户角色成功！");
+        });
+      this.editRightsDialogVisible = false;
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.box-card {
-  margin: 20px auto;
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.3) !important;
-}
 .iptWidth {
   width: 380px !important;
 }
