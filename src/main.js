@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
+import treeTable from 'vue-table-with-tree-grid'
+Vue.component('tree-table', treeTable)
+
 import axios from 'axios'
 //添加axios请求拦截器来添加token,以保证拥有数据的权限
 axios.interceptors.request.use(config => {
@@ -15,9 +18,11 @@ import './assets/fonts/iconfont.css' //导入字体图标
 import {
   Form, FormItem, Input, Button, Message, Container, Header, Aside, Main,
   Submenu, MenuItemGroup, Menu, MenuItem, Row, Col, Card, Breadcrumb, BreadcrumbItem,
-  Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox, Tag, Tree, Select, Option
+  Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox, Tag, Tree, Select,
+  Option, Cascader
 } from 'element-ui';
 
+Vue.use(Cascader)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Tree)
