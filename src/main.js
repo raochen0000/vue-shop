@@ -11,7 +11,7 @@ axios.interceptors.request.use(config => {
   // console.log(config);
   return config;
 })
-axios.defaults.baseURL = 'http://liufusong.top:8888/api/private/v1'
+axios.defaults.baseURL = 'http://42.192.71.221:8889/api/private/v1'
 Vue.prototype.$axios = axios
 import './assets/css/global.css' //导入全局样式表
 import './assets/fonts/iconfont.css' //导入字体图标
@@ -19,9 +19,13 @@ import {
   Form, FormItem, Input, Button, Message, Container, Header, Aside, Main,
   Submenu, MenuItemGroup, Menu, MenuItem, Row, Col, Card, Breadcrumb, BreadcrumbItem,
   Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox, Tag, Tree, Select,
-  Option, Cascader
+  Option, Cascader, Alert, Tabs, TabPane,
 } from 'element-ui';
 
+
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Alert)
 Vue.use(Cascader)
 Vue.use(Select)
 Vue.use(Option)
