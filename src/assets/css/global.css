@@ -28,3 +28,10 @@ html,body,#app{
 .myInput {
     width: 120px;
 }
+.mySteps {
+    margin: 20px auto;
+    font-size: 14px !important;
+}
+.ql-editor {
+    min-height: 230px !important;
+  }
