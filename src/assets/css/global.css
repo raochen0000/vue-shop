@@ -35,3 +35,6 @@ html,body,#app{
 .ql-editor {
     min-height: 230px !important;
   }
+.myCascader {
+    width: 100%;
+}

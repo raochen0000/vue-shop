@@ -29,10 +29,13 @@ import {
   Form, FormItem, Input, Button, Message, Container, Header, Aside, Main,
   Submenu, MenuItemGroup, Menu, MenuItem, Row, Col, Card, Breadcrumb, BreadcrumbItem,
   Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox, Tag, Tree, Select,
-  Option, Cascader, Alert, Tabs, TabPane, Step, Steps, CheckboxGroup, Checkbox, Upload
+  Option, Cascader, Alert, Tabs, TabPane, Step, Steps, CheckboxGroup, Checkbox, Upload, TimelineItem,
+  Timeline
 } from 'element-ui';
 
 
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 Vue.use(Upload)
 Vue.use(Checkbox)
 Vue.use(CheckboxGroup)
